@@ -10,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<ICoffeeService, CoffeeService>();
+builder.Services.AddHttpClient<IWeatherService, WeatherService>();
 
 var app = builder.Build();
 
