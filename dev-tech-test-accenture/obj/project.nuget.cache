@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "/hKlr016/ys=",
+  "dgSpecHash": "9DIZrQliyOo=",
   "success": true,
-  "projectFilePath": "C:\\Users\\mikco.jasareno\\source\\repos\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture.csproj",
+  "projectFilePath": "C:\\Users\\mikco.jasareno\\source\\repos\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\mikco.jasareno\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\mikco.jasareno\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
