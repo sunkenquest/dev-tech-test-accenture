@@ -1,0 +1,20 @@
+# Build artefacts – the SDK stage re-builds everything from source
+**/bin/
+**/obj/
+ 
+# IDE / OS noise
+**/.idea/
+**/.vs/
+**/.vscode/
+**/.DS_Store
+**/Thumbs.db
+ 
+# Git
+**/.git/
+**/.gitignore
+ 
+# Docker files themselves (no need to copy into the image)
+Dockerfile
+docker-compose.yml
+.dockerignore
+ 
