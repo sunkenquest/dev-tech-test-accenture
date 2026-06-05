@@ -24,6 +24,10 @@ public class CoffeeController : ControllerBase
             return StatusCode(503);
         }
 
+        if (_coffeeService.IsAprilFools())
+            return StatusCode(418);
+            
+
         var response = new CoffeeResponse
         {
             Message = "Your piping hot coffee is ready",

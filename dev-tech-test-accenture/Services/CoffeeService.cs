@@ -19,4 +19,10 @@ public class CoffeeService : ICoffeeService
 
         return true;
     }
+
+    public bool IsAprilFools()
+    {
+        var today = DateTime.UtcNow;
+        return today.Month == 4 && today.Day == 1;
+    }
 }
