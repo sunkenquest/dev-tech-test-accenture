@@ -21,6 +21,9 @@ public class CoffeeController : ControllerBase
     [HttpGet("/brew-coffee")]
     public async Task<IActionResult> BrewCoffee()
     {
+        if (_coffeeService.IsAprilFools())
+            return StatusCode(418);
+
         var temp = await _weatherService.GetCurrentTemperatureAsync();
 
         var allowed = _coffeeService.TryBrew(HttpContext);
