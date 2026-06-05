@@ -453,11 +453,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mikco.jasareno\\source\\repos\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture.csproj",
+      "projectUniqueName": "C:\\Users\\mikco.jasareno\\source\\repos\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture.csproj",
       "projectName": "dev-tech-test-accenture",
-      "projectPath": "C:\\Users\\mikco.jasareno\\source\\repos\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture.csproj",
+      "projectPath": "C:\\Users\\mikco.jasareno\\source\\repos\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture.csproj",
       "packagesPath": "C:\\Users\\mikco.jasareno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mikco.jasareno\\source\\repos\\dev-tech-test-accenture\\dev-tech-test-accenture\\obj\\",
+      "outputPath": "C:\\Users\\mikco.jasareno\\source\\repos\\dev-tech-test-accenture\\dev-tech-test-accenture\\dev-tech-test-accenture\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

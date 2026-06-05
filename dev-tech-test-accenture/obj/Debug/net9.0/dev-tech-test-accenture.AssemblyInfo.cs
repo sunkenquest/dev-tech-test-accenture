@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("dev-tech-test-accenture")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fe72d6738e9e41b4373410012d73bbb4129fbb59")]
 [assembly: System.Reflection.AssemblyProductAttribute("dev-tech-test-accenture")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dev-tech-test-accenture")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
