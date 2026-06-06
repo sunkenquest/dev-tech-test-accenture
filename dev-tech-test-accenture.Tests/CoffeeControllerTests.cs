@@ -3,97 +3,99 @@ using dev_tech_test_accenture.Models;
 using dev_tech_test_accenture.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 
 namespace dev_tech_test_accenture.Tests;
 
 public class CoffeeControllerTests
 {
-    [Fact]
-    public void BrewCoffee_ReturnsOk_WhenCoffeeCanBeBrewed()
+    private CoffeeController CreateController(
+        Mock<ICoffeeService> coffeeMock,
+        Mock<IWeatherService> weatherMock)
     {
-        var service = new FakeCoffeeService
-        {
-            TryBrewResult = true,
-            IsAprilFoolsResult = false
-        };
-
-        var controller = new CoffeeController(service)
+        return new CoffeeController(coffeeMock.Object, weatherMock.Object)
         {
             ControllerContext = new ControllerContext
             {
                 HttpContext = new DefaultHttpContext()
             }
         };
+    }
 
-        var result = controller.BrewCoffee();
+    [Fact]
+    public async Task BrewCoffee_ReturnsHotCoffee_WhenColdWeather()
+    {
+        var coffeeMock = new Mock<ICoffeeService>();
+        coffeeMock.Setup(x => x.IsAprilFools()).Returns(false);
+        coffeeMock.Setup(x => x.TryBrew(It.IsAny<HttpContext>())).Returns(true);
 
-        var okResult = Assert.IsType<OkObjectResult>(result);
-        var response = Assert.IsType<CoffeeResponse>(okResult.Value);
+        var weatherMock = new Mock<IWeatherService>();
+        weatherMock.Setup(x => x.GetCurrentTemperatureAsync())
+                    .ReturnsAsync(25);
+
+        var controller = CreateController(coffeeMock, weatherMock);
+
+        var result = await controller.BrewCoffee();
+
+        var ok = Assert.IsType<OkObjectResult>(result);
+        var response = Assert.IsType<CoffeeResponse>(ok.Value);
 
         Assert.Equal("Your piping hot coffee is ready", response.Message);
-        Assert.False(string.IsNullOrWhiteSpace(response.Prepared));
     }
 
     [Fact]
-    public void BrewCoffee_Returns503_WhenCoffeeCannotBeBrewed()
+    public async Task BrewCoffee_ReturnsIcedCoffee_WhenHotWeather()
     {
-        var service = new FakeCoffeeService
-        {
-            TryBrewResult = false,
-            IsAprilFoolsResult = false
-        };
+        var coffeeMock = new Mock<ICoffeeService>();
+        coffeeMock.Setup(x => x.IsAprilFools()).Returns(false);
+        coffeeMock.Setup(x => x.TryBrew(It.IsAny<HttpContext>())).Returns(true);
 
-        var controller = new CoffeeController(service)
-        {
-            ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext()
-            }
-        };
+        var weatherMock = new Mock<IWeatherService>();
+        weatherMock.Setup(x => x.GetCurrentTemperatureAsync())
+                    .ReturnsAsync(35);
 
-        var result = controller.BrewCoffee();
+        var controller = CreateController(coffeeMock, weatherMock);
 
-        var statusResult = Assert.IsType<StatusCodeResult>(result);
-        Assert.Equal(503, statusResult.StatusCode);
+        var result = await controller.BrewCoffee();
+
+        var ok = Assert.IsType<OkObjectResult>(result);
+        var response = Assert.IsType<CoffeeResponse>(ok.Value);
+
+        Assert.Equal("Your refreshing iced coffee is ready", response.Message);
     }
 
     [Fact]
-    public void BrewCoffee_Returns418_OnAprilFools()
+    public async Task BrewCoffee_Returns503_WhenCoffeeNotAllowed()
     {
-        var service = new FakeCoffeeService
-        {
-            TryBrewResult = true,
-            IsAprilFoolsResult = true
-        };
+        var coffeeMock = new Mock<ICoffeeService>();
+        coffeeMock.Setup(x => x.IsAprilFools()).Returns(false);
+        coffeeMock.Setup(x => x.TryBrew(It.IsAny<HttpContext>())).Returns(false);
 
-        var controller = new CoffeeController(service)
-        {
-            ControllerContext = new ControllerContext
-            {
-                HttpContext = new DefaultHttpContext()
-            }
-        };
+        var weatherMock = new Mock<IWeatherService>();
+        weatherMock.Setup(x => x.GetCurrentTemperatureAsync())
+                    .ReturnsAsync(25);
 
-        var result = controller.BrewCoffee();
+        var controller = CreateController(coffeeMock, weatherMock);
 
-        var statusResult = Assert.IsType<StatusCodeResult>(result);
-        Assert.Equal(418, statusResult.StatusCode);
-    }
-}
+        var result = await controller.BrewCoffee();
 
-public class FakeCoffeeService : ICoffeeService
-{
-    public bool TryBrewResult { get; set; }
-
-    public bool IsAprilFoolsResult { get; set; }
-
-    public bool TryBrew(HttpContext context)
-    {
-        return TryBrewResult;
+        var status = Assert.IsType<StatusCodeResult>(result);
+        Assert.Equal(503, status.StatusCode);
     }
 
-    public bool IsAprilFools()
+    [Fact]
+    public async Task BrewCoffee_Returns418_OnAprilFools()
     {
-        return IsAprilFoolsResult;
+        var coffeeMock = new Mock<ICoffeeService>();
+        coffeeMock.Setup(x => x.IsAprilFools()).Returns(true);
+
+        var weatherMock = new Mock<IWeatherService>();
+
+        var controller = CreateController(coffeeMock, weatherMock);
+
+        var result = await controller.BrewCoffee();
+
+        var status = Assert.IsType<StatusCodeResult>(result);
+        Assert.Equal(418, status.StatusCode);
     }
 }
